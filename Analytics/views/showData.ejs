@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>ANALYTICS WEB SERVER</title>
+
+    <!-- Bootstrap core CSS-->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Plugin CSS -->
+    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin.css" rel="stylesheet">
+   
+  	<!-- Include Date Range Picker -->
+  	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />  
+    <!-- Table bootstrap Css -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  </head>
+
+  <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+      <a class="navbar-brand" href="#">ANALYTICS Web Server</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+          <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Dashboard">
+            <a class="nav-link" href="#dashboard">
+              <i class="fa fa-fw fa-dashboard"></i>
+              <span class="nav-link-text">
+                Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right">
+            <a class="nav-link" href="#table">
+              <i class="fa fa-fw fa-table"></i>
+              <span class="nav-link-text">
+                Tables</span>
+            </a>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right">
+            <a class="nav-link" href="#location">
+              <i class="fa fa-fw fa-area-chart"></i>
+              <span class="nav-link-text">
+                Location</span>
+            </a>
+          </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+              <i class="fa fa-fw fa-sign-out"></i>
+              Logout</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="content-wrapper">
+      <div class="container-fluid">
+
+        <!-- Breadcrumbs -->
+        <div id="dashboard"></div>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="/showData">Dashboard</a>
+          </li>
+        </ol>
+
+        <!-- Cards -->
+        <div class="row">
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-warning o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fa fa-fw fa-list"></i>
+                </div>
+                <div id="bestPage" class="mr-5">
+                  THE BEST PAGE
+                </div>
+                <div id="bestPage_result" class="mr-6">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-primary o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fa fa-fw fa-comments"></i>
+                </div>
+                <div id="bestOS" class="mr-5">
+                  THE BEST OS
+                </div>
+                <div id="bestOS_result" class="mr-6">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-success o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fa fa-fw fa-shopping-cart"></i>
+                </div>
+                <div id="bestDate" class="mr-5">
+                  THE BEST DATE
+                </div>
+                <div id="bestDate_result" class="mr-6">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6 mb-3">
+            <div class="card text-white bg-danger o-hidden h-100">
+              <div class="card-body">
+                <div class="card-body-icon">
+                  <i class="fa fa-fw fa-support"></i>
+                </div>
+                <div id="bestTime" class="mr-5">
+                  THE BEST TIME
+                </div>
+                <div id="bestTime_result" class="mr-6">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!-- Area Chart PAHT/OS/DATE/TIME -->
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fa fa-dashboard"></i>
+            Show the USER Ratio and Changes 
+            <span class="col-sm-2 text-center">
+            	<i class="fa fa-search"></i>
+			        <input class="fa col-sm-2" id="dateRange" type="text" placeholder="dateRange">
+		  	    </span>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-xl-6 col-sm-12 mb-6">
+                <div class="card-body">
+              	  <div class="card text-white bg-warning o-hidden h-100 col-xl-2 text-center">PAGE</div>
+                  <canvas id="myPieChart_path" width="50%" height="25"></canvas>
+                </div>
+              </div>
+              <div class="col-xl-6 col-sm-12 mb-6">
+                <div class="card-body">
+                  <div class="card text-white bg-primary o-hidden h-100 col-xl-2 text-center">OS</div>
+                  <canvas id="myPieChart_OS" width="50%" height="25"></canvas>
+                </div>
+              </div>
+              <div class="card text-white bg-success o-hidden h-100 col-sm-1 text-center">DATE</div>
+              <canvas id="myAreaChart_date" width="100%" height="20"></canvas>
+              <div class="card text-white bg-danger o-hidden h-100 col-sm-1 text-center">TIME</div>
+              <canvas id="myAreaChart_time" width="100%" height="20"></canvas>
+            </div>
+       	 </div>
+       	 <div id="time_change" class="card-footer small text-muted"></div>
+        </div>
+        
+
+        <div id="table"></div>
+        <div class="card mb-3">
+          <div class="card-header">
+            <i class="fa fa-table"></i>
+            Show the USER Info
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table paginated" width="100%" id="dataTable" cellspacing="0">
+                <thead>
+                  <tr style="background-color: #FCC525; color: #fff;">
+                    <th>DATE</th>
+                    <th>TIME</th>
+                    <th>ID</th>
+                    <th>IP</th>
+                    <th>PATH</th>
+                    <th>REFERRER</th>
+                  </tr>
+                </thead>
+                <tbody>                 
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="location"></div>
+      <div class="card mb-3">
+        <div class="card-header">
+          <i class="fa fa-area-chart"></i>
+            Show the USER location
+          <div class="card-body">   
+            <div id="map" style="width:100%; height:400px;">
+              <div id="map_view"></div>
+            </div>
+          </div> 
+          <div id="time_location" class="card-footer small text-muted"></div>
+        </div>
+      </div>
+
+
+    <footer class="sticky-footer">
+      <div class="container">
+        <div class="text-center">
+          <small>Chung's Analytics 2017</small>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fa fa-angle-up"></i>
+    </a>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.2/moment-with-locales.min.js"></script> 
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Include Required Prerequisites -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+
+    <!-- Include Date Range Picker -->
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+
+    <!-- Chart create function -->
+    <script src="js/chart.js"></script>
+    <!-- Table create function -->
+    <script src="js/table.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script>
+      //parsing : 절대적으로 중요.
+      <% var users = JSON.parse(users) %>
+      
+      //DATA SETTING
+      var locations = new Array();
+      //for 루프 최적화: max사용(var i=0, max=users.length; i<max; i+=1) / i++(과도한 기교) --> i+=1
+      //for in loop : 배열이 아닌 객체를 순회할때 사용.
+      <% for(var i in users) { %>
+        var latlng = new Object();
+        if("<%=users[i].lat%>" == ""){ latlng.lat = NaN; } //위도와 경도는 0도 값이 있는 것이므로 NaN라고 써야한다.
+        if("<%=users[i].lon%>" == ""){ latlng.lng = NaN; }
+        latlng.lat = parseFloat("<%=users[i].lat%>");
+        latlng.lng = parseFloat("<%=users[i].lon%>");        
+        locations.push(latlng);
+      <% } %>
+
+      //MAP SETTING
+      var initMap = function() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 6,
+          center: {lat: 36.524, lng: 127.887},
+          styles:
+              [
+                  {
+                      "featureType": "administrative",
+                      "elementType": "labels.text.fill",
+                      "stylers": [
+                          {
+                              "color": "#444444"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "landscape",
+                      "elementType": "all",
+                      "stylers": [
+                          {
+                              "color": "#f2f2f2"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "poi",
+                      "elementType": "all",
+                      "stylers": [
+                          {
+                              "visibility": "off"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "road",
+                      "elementType": "all",
+                      "stylers": [
+                          {
+                              "saturation": -100
+                          },
+                          {
+                              "lightness": 45
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "road.highway",
+                      "elementType": "all",
+                      "stylers": [
+                          {
+                              "visibility": "simplified"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "road.arterial",
+                      "elementType": "labels.icon",
+                      "stylers": [
+                          {
+                              "visibility": "off"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "transit",
+                      "elementType": "all",
+                      "stylers": [
+                          {
+                              "visibility": "off"
+                          }
+                      ]
+                  },
+                  {
+                      "featureType": "water",
+                      "elementType": "all",
+                      "stylers": [
+                          {
+                              "color": "#46bcec"
+                          },
+                          {
+                              "visibility": "on"
+                          }
+                      ]
+                  }
+              ]
+        });
+        var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        var markers = locations.map(function(location, i) {
+          return new google.maps.Marker({
+            position: location,
+            label: labels[i % labels.length]
+          });
+        });
+        var markerCluster = new MarkerClusterer(map, markers,
+            {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
+      }
+
+  		$(function(){
+        // CHART SETTING
+        Chart.defaults.global.defaultFontFamily = "Georgia";
+        Chart.defaults.global.defaultFontColor = '#292b2c';
+        //AreaChart graph
+        var ctx1 = $("#myPieChart_path");
+        var ctx2 = $("#myPieChart_OS");
+        var ctx3 = $("#myAreaChart_date");
+        var ctx4 = $("#myAreaChart_time");
+        //Card
+        var best1 = $("#bestPage_result");
+        var best2 = $("#bestOS_result");
+        var best3 = $("#bestDate_result");
+        var best4 = $("#bestTime_result");
+        
+        var myChart1 = initChart_Pie(ctx1);
+        var myChart2 = initChart_Pie(ctx2);
+        var myChart3 = initChart_Line(ctx3);
+        var myChart4 = initChart_Line(ctx4);
+
+        //처음에 로딩되었을 때, Event (수집한 첫날부터 현재까지의 data를 보여줌.)
+      	var arr1 = new Array();
+  			var arr2 = new Array();
+  			var arr3 = new Array();
+  			var arr4 = new Array();
+  			var d = new Date();
+
+  			<% for(var i in users) { %>
+  				arr1.push("<%= users[i].path %>");
+  				arr2.push("<%= users[i].OS %>");
+  				arr3.push("<%= users[i].date %>");
+  				arr4.push("<%= users[i].time %>");       
+  			<% } %>
+
+      	<% for(var i=1; i<5; i+=1) { %>
+    			//parameter : data / chart / card / totalCount
+    			updateChart(arr<%=i%>, myChart<%=i%>, best<%=i%>);
+  			<% } %>
+  			updateClock(); // initial call
+
+  			//원하는 날짜 범위를 선택했을 때, Event
+  			$('#dateRange').daterangepicker(
+  			{
+  		    locale: { format: 'MM.DD' },
+  		   	startDate: '08.12',
+  		    endDate: ("0"+(d.getMonth()+1)).slice(-2)+"."+("0"+d.getDate()).slice(-2)
+  			}, 
+  			function(start, end, label) {
+  				$.post('/showdata', { start:start.format('MM.DD'), end:end.format('MM.DD') }, function(data){
+            <% for(i=0; i<5; i+=1) { %>
+  						arr<%=i%> = [];
+  					<% } %>	
+  			    
+  					for(var i in data){
+  						arr1.push(data[i].path);
+  						arr2.push(data[i].OS);
+  						arr3.push(data[i].date);
+  						arr4.push(data[i].time);
+  					}
+            createTable(data);
+  					<% for(var i=1; i<5; i+=1) { %>
+  						deleteChart(myChart<%=i%>);
+      				updateChart(arr<%=i%>, myChart<%=i%>, best<%=i%>);
+  					<% } %>
+  					updateClock(); // initial call			
+  				});	
+  			});
+      });      
+    </script>
+     <!-- Google Map API and function -->
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBAZJZRIaAbXba9HC59UHfYnynkFg28f2s&callback=initMap" async defer></script>
+  </body>
+</html>
