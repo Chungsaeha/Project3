@@ -167,9 +167,7 @@
               <canvas id="myAreaChart_time" width="100%" height="20"></canvas>
             </div>
        	 </div>
-       	 <div id="time_change" class="card-footer small text-muted"></div>
         </div>
-        
 
         <div id="table"></div>
         <div class="card mb-3">
@@ -195,6 +193,17 @@
               </table>
             </div>
           </div>
+          <div id="time_change" class="card-footer small text-muted"></div>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-header">
+          <i class="fa fa-list"></i>
+          Show the Referrer per Page
+          </div>
+          <div class="card-body">
+          <canvas id="myPieChart_referrer" width="100%" height="40"></canvas>
+          </div>
         </div>
       </div>
 
@@ -208,7 +217,6 @@
               <div id="map_view"></div>
             </div>
           </div> 
-          <div id="time_location" class="card-footer small text-muted"></div>
         </div>
       </div>
 
@@ -366,45 +374,52 @@
             {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
       }
 
-  		$(function(){
+  	$(function(){
         // CHART SETTING
         Chart.defaults.global.defaultFontFamily = "Georgia";
         Chart.defaults.global.defaultFontColor = '#292b2c';
-        //AreaChart graph
+        //Chart graph
         var ctx1 = $("#myPieChart_path");
         var ctx2 = $("#myPieChart_OS");
         var ctx3 = $("#myAreaChart_date");
         var ctx4 = $("#myAreaChart_time");
+        var ctx5 = $("#myPieChart_referrer");
         //Card
         var best1 = $("#bestPage_result");
         var best2 = $("#bestOS_result");
         var best3 = $("#bestDate_result");
         var best4 = $("#bestTime_result");
-        
+
         var myChart1 = initChart_Pie(ctx1);
         var myChart2 = initChart_Pie(ctx2);
         var myChart3 = initChart_Line(ctx3);
         var myChart4 = initChart_Line(ctx4);
+        var myChart5 = initChart_Radar(ctx5);
 
         //처음에 로딩되었을 때, Event (수집한 첫날부터 현재까지의 data를 보여줌.)
       	var arr1 = new Array();
   			var arr2 = new Array();
   			var arr3 = new Array();
   			var arr4 = new Array();
+        var arr5 = new Array();
   			var d = new Date();
-
   			<% for(var i in users) { %>
-  				arr1.push("<%= users[i].path %>");
+          var referrer = "<%= users[i].referrer %>";
+          if(referrer === "") { referrer = "Direct"; }
+ 
+    			arr1.push("<%= users[i].path %>");
   				arr2.push("<%= users[i].OS %>");
   				arr3.push("<%= users[i].date %>");
-  				arr4.push("<%= users[i].time %>");       
-  			<% } %>
+  				arr4.push("<%= users[i].time %>");
+          arr5.push(referrer);
+   			<% } %>
 
       	<% for(var i=1; i<5; i+=1) { %>
     			//parameter : data / chart / card / totalCount
     			updateChart(arr<%=i%>, myChart<%=i%>, best<%=i%>);
   			<% } %>
-  			updateClock(); // initial call
+  			updateClock();
+        updateChart_Radar(arr1, arr5, myChart5);
 
   			//원하는 날짜 범위를 선택했을 때, Event
   			$('#dateRange').daterangepicker(
