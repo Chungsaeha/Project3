@@ -123,7 +123,7 @@ var initChart_Line = function(ctx){
 //pie Chart를 초기화해주는 함수
 var initChart_Pie = function(ctx){
 	var myPieChart = new Chart(ctx, {
-	  type: 'pie',
+	  type: 'doughnut',
 	  data: {
 	    labels: "",
 	    datasets: [{
@@ -138,3 +138,91 @@ var initChart_Pie = function(ctx){
 	});
 	return myPieChart;
 }
+
+//radar Chart를 초기화해주는 함수
+var initChart_Radar = function(ctx){
+	var myRadarChart = new Chart(ctx,{
+		type:"radar",
+		data:{
+			//Page 개수에 따라서 하드코딩 해주는게 최선인가?
+			labels:"",
+			datasets:[{
+				label:"",
+				data:"",
+				backgroundColor:'rgba(183, 240, 177, 0.2)',
+				borderColor:'#04B431',
+				pointBackgroundColor:'#04B431',
+				pointBorderColor:"#fff",
+				pointHoverBackgroundColor:"#04B431",
+				pointHoverBorderColor:'#fff'
+			},
+			{
+				label:"",
+				data:"",
+				backgroundColor:'rgba(255, 167, 167, 0.2)',
+				borderColor:'#FF0000',
+				pointBackgroundColor:'#FF0000',
+				pointBorderColor:"#fff",
+				pointHoverBackgroundColor:"#FF0000",
+				pointHoverBorderColor:'#fff'
+			},
+			{
+				label:"",
+				data:"",
+				backgroundColor:'rgba(250, 237, 125, 0.2)',
+				borderColor:'#FFFF00',
+				pointBackgroundColor:'#FFFF00',
+				pointBorderColor:"#fff",
+				pointHoverBackgroundColor:"#FFFF00",
+				pointHoverBorderColor:'#fff'
+			},
+			{
+				label:"",
+				data:"",
+				backgroundColor:'rgba(178, 204, 255, 0.2)',
+				borderColor:'#0040FF',
+				pointBackgroundColor:'#0040FF',
+				pointBorderColor:"#fff",
+				pointHoverBackgroundColor:"#0040FF",
+				pointHoverBorderColor:'#fff'	
+			}]
+		}
+	});	
+	return myRadarChart;
+}
+
+var updateChart_Radar = function(Array1, Array2, myRadarChart){
+    //pathArr / referrerArr(중복제거)  ||  Array1 / Array2 (전체개수) 
+    var pathArr = Array1.reduce(function(a,b){if(a.indexOf(b)<0){a.push(b);}return a;},[]);
+    var referrerArr = Array2.reduce(function(a,b){if(a.indexOf(b)<0){a.push(b);}return a;},[]);
+    var indexArr = new Array();		//path와 비교해서 동일한 data의 index를 담는 배열.
+	var length = pathArr.length;	//path 중복을 제거한 배열의 길이
+	var totalLength = Array1.length;//path 전체 배열의 길이
+
+	for(var i=0; i<length; i+=1)
+	{
+		var path = pathArr[i]; // 1 page / 2 page / 3 page / 4 page
+		indexArr = [];
+		Array1.forEach(function(v,i){
+			if(path === v){
+				indexArr.push(i); // Ex> /main인 path의 index값을 배열에 넣음.
+			}
+		});
+		var dataset = myRadarChart.data.datasets[i];
+		dataset.label = path; //labels에 값 넣기 
+		referrerArr.forEach(function(v,i){
+			var referrer = v;
+			var count = 0;
+			indexArr.forEach(function(v,i){
+				if(referrer === Array2[v]){
+					count++;
+				}
+			});
+			console.log(count);
+			myRadarChart.data.labels[i] = referrer;
+			dataset.data[i] = count;
+		})
+	}
+	myRadarChart.update();
+}
+
