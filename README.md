@@ -1,6 +1,4 @@
-# Project3
-2017_Analytics Web server
-
-1. 웹에 범용적으로 사용할 수 있는 추적코드 개발 
-2. 추적한 정보를 보고서로 보여주는 웹 서버 및 페이지 개발 
-3. 전기자동차 충전소 정보를 가져오고 클라이언트로 보내주는 프록시 서버 구축
+# Open Source & Library 사용내역
+1. Nodejs Express Engine
+2. bootstarp.js , jquery.js , Chart.js, datetimepicker.js
+3. MongoDB
